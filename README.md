@@ -35,7 +35,7 @@ A solution is considered "Resolved" when it meets the following:
 
 ---
 
-## Open Issues (12)
+## Open Issues (15)
 
 ### 1. rootstock
 > **Impact:** ~20 hours saved per HPC researcher per year
@@ -115,7 +115,46 @@ ink learn               # Reflect and grow from session
 
 ---
 
-### 5. cif-validate
+### 5. paperpack
+> **Impact:** ~15 hours saved per academic researcher per year
+
+**The friction:** Managing academic references is painful. You copy BibTeX from Google Scholar, manually fix formatting inconsistencies, deal with merge conflicts in version control, and spend hours ensuring collaborators have the same references. When you move to a new project, you start from scratch.
+
+**Why existing tools don't solve it:** Google Scholar, ArXiv, and publisher sites all format the same paper differently. BibTeX files are hard to diff and merge. Traditional `.bib` files are locked to one project with no portability.
+
+**The solution:** A modern reference manager with universal identifiers (DOI/ArXiv ID), automatic BibTeX generation, shareable "packs" of curated references, and lock files for reproducible builds across machines.
+
+```bash
+paperpack add arxiv:1706.03762
+paperpack add doi:10.1038/nature14539
+paperpack add "attention is all you need"
+paperpack build
+```
+
+**Status:** 🔴 Open
+
+---
+
+### 6. doi-fetch
+> **Impact:** ~8 hours saved per researcher per year
+
+**The friction:** Looking up paper metadata requires navigating multiple websites, copy-pasting from different sources, and manually formatting citations. When writing scripts or AI prompts, there's no simple way to fetch structured metadata from a DOI.
+
+**Why existing tools don't solve it:** APIs exist but require authentication, parsing JSON responses, and handling rate limits. There's no simple CLI that just gives you what you need.
+
+**The solution:** A Python CLI and Claude Skill that fetches clean metadata from any DOI—title, authors, abstract, BibTeX, and more—in one command.
+
+```bash
+doi-fetch 10.1038/nature14539
+doi-fetch 10.1038/nature14539 --format bibtex
+doi-fetch 10.1038/nature14539 --format json
+```
+
+**Status:** 🔴 Open
+
+---
+
+### 7. cif-validate
 > **Impact:** ~12 hours saved per materials scientist per year
 
 **The friction:** CIF files from databases or collaborators often contain partial occupancies, inconsistent symmetry, or missing metadata. DFT or structure analysis tools fail late, or worse, run with a subtly wrong structure.
@@ -134,7 +173,7 @@ cif-validate input.cif --fix-suggestions
 
 ---
 
-### 6. potential-lock
+### 8. potential-lock
 > **Impact:** ~10 hours saved per computational materials researcher per year
 
 **The friction:** Results change because an interatomic potential or force field file was updated, renamed, or swapped without anyone noticing. Reproducing a run becomes guesswork.
@@ -153,7 +192,7 @@ potential-lock diff old.lock new.lock
 
 ---
 
-### 7. sdf-audit
+### 9. sdf-audit
 > **Impact:** ~9 hours saved per chemoinformatics researcher per year
 
 **The friction:** Molecular files contain invalid valence, missing stereochemistry, salts, or duplicate structures. These errors contaminate datasets and cause downstream failures.
@@ -172,7 +211,7 @@ sdf-audit molecules.smi --reject invalid.smi
 
 ---
 
-### 8. env-replay
+### 10. env-replay
 > **Impact:** ~12 hours saved per researcher per year
 
 **The friction:** Reproducing a result from six months ago fails because `pip freeze` wasn't enough. OS packages, CUDA drivers, system libs, and hidden env vars are missing. You spend days doing version archaeology.
@@ -191,7 +230,7 @@ env-replay verify run.manifest.json           # sanity checks + diff
 
 ---
 
-### 9. data-manifest
+### 11. data-manifest
 > **Impact:** ~15 hours saved per data scientist per year
 
 **The friction:** Teams keep re-downloading datasets or silently using different versions. A single schema change can invalidate months of experiments, but no one notices until results diverge.
@@ -210,7 +249,7 @@ data-manifest diff old.manifest.json new.manifest.json
 
 ---
 
-### 9. run-watchdog
+### 12. run-watchdog
 > **Impact:** ~20 hours saved per ML engineer per year
 
 **The friction:** Long training runs stall, diverge, or hang, but keep burning GPU hours. You often discover the failure the next morning.
@@ -229,7 +268,7 @@ run-watchdog --slurm <job_id> --auto-cancel
 
 ---
 
-### 10. eval-lock
+### 13. eval-lock
 > **Impact:** ~18 hours saved per researcher per year
 
 **The friction:** Evaluation numbers drift because datasets, metrics, or preprocessing change quietly. Teams argue about which score is "real."
@@ -248,7 +287,7 @@ eval-lock verify --pack imagenet_v3 --checksum
 
 ---
 
-### 11. prompt-budget
+### 14. prompt-budget
 > **Impact:** ~25 hours saved per LLM app developer per year
 
 **The friction:** LLM costs spiral because prompts grow, chains expand, and caching is inconsistent. You only notice after the bill arrives.
@@ -267,7 +306,7 @@ prompt-budget guard --max-usd 50/day
 
 ---
 
-### 12. figlint
+### 15. figlint
 > **Impact:** ~8 hours saved per researcher per paper
 
 **The friction:** Figures are rejected for wrong size, font, DPI, or accessibility issues right before submission deadlines.
