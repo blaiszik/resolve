@@ -1,0 +1,73 @@
+name: "Propose a friction"
+description: "Add a new issue to Resolve's open registry"
+title: "Friction: <short name>"
+labels: ["friction", "proposal"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for contributing! Please keep the scope buildable in 1-5 days.
+  - type: input
+    id: name
+    attributes:
+      label: Issue name (tool-like slug)
+      placeholder: "env-replay"
+    validations:
+      required: true
+  - type: input
+    id: role
+    attributes:
+      label: Primary role impacted
+      placeholder: "ML researcher, data scientist, computational chemist"
+    validations:
+      required: true
+  - type: textarea
+    id: friction
+    attributes:
+      label: The friction
+      description: "What repeatedly goes wrong? Be concrete and specific."
+      placeholder: "Reproducing a run fails because ..."
+    validations:
+      required: true
+  - type: textarea
+    id: why-not-existing
+    attributes:
+      label: Why existing tools don't solve it
+      description: "Be explicit about gaps or missing workflows."
+      placeholder: "Tool X covers part of this, but ..."
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: What a solution would look like
+      description: "Describe the 1-5 day MVP, plus a CLI or API sketch if relevant."
+      placeholder: "A CLI that ..."
+    validations:
+      required: true
+  - type: input
+    id: impact
+    attributes:
+      label: Impact per person per year (hours)
+      placeholder: "~12 hours"
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence or examples
+      description: "Links, anecdotes, or rough counts that show this is common."
+      placeholder: "Issue threads, papers, internal postmortems, etc."
+    validations:
+      required: false
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checklist
+      options:
+        - label: I searched for existing solutions (GitHub, PyPI, web)
+          required: true
+        - label: The scope is buildable in 1-5 days by a skilled developer
+          required: true
+        - label: The friction is a recurring problem, not a one-off
+          required: true

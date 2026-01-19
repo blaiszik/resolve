@@ -1,0 +1,62 @@
+name: "Link a solution"
+description: "Associate a tool or repo with an existing Resolve issue"
+title: "Solution: <issue name>"
+labels: ["solution", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for building! Provide a link and any proof that it works.
+  - type: input
+    id: issue
+    attributes:
+      label: Resolve issue number or name
+      placeholder: "#12 or env-replay"
+    validations:
+      required: true
+  - type: input
+    id: repo
+    attributes:
+      label: Repo URL
+      placeholder: "https://github.com/org/tool"
+    validations:
+      required: true
+  - type: dropdown
+    id: status
+    attributes:
+      label: Status
+      options:
+        - In Progress
+        - Solved
+    validations:
+      required: true
+  - type: textarea
+    id: proof
+    attributes:
+      label: Evidence it works
+      description: "Links to docs, demos, or release notes."
+      placeholder: "README section, screenshot, or demo video"
+    validations:
+      required: false
+  - type: input
+    id: license
+    attributes:
+      label: License
+      placeholder: "MIT, Apache-2.0, BSD-3-Clause"
+    validations:
+      required: false
+  - type: input
+    id: contact
+    attributes:
+      label: Primary contact
+      placeholder: "@handle or email"
+    validations:
+      required: false
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: "Anything maintainers should know about scope or limitations."
+      placeholder: "Known gaps, supported platforms, etc."
+    validations:
+      required: false

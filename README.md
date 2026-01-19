@@ -35,7 +35,7 @@ A solution is considered "Resolved" when it meets the following:
 
 ---
 
-## Open Issues (17)
+## Open Issues (12)
 
 ### 1. rootstock
 > **Impact:** ~20 hours saved per HPC researcher per year
@@ -75,7 +75,47 @@ groundhog status --job-id abc123
 
 ---
 
-### 3. cif-validate
+### 3. grove
+> **Impact:** ~15 hours saved per JS/TS developer per year
+
+**The friction:** Modern development often requires working on multiple branches simultaneously—reviewing a PR while fixing a bug, comparing implementations side-by-side, or running parallel AI coding sessions. Git worktrees solve this, but for JavaScript/TypeScript projects they're painful. Each worktree needs its own `node_modules`, meaning slow `npm install` in every worktree, gigabytes of duplicated packages, and manual port management for preview servers.
+
+**Why existing tools don't solve it:** Git worktrees work great for compiled languages, but the JS ecosystem assumes one `node_modules` per repo. No tool handles dependency deduplication, port allocation, and editor/AI tool configuration across worktrees.
+
+**The solution:** A git worktree manager with smart dependency handling—shared caches, automatic port allocation, and preserved tool configurations across worktrees.
+
+```bash
+grove create feature-branch
+grove list
+grove switch feature-branch
+grove clean --older-than 7d
+```
+
+**Status:** 🔴 Open
+
+---
+
+### 4. ink
+> **Impact:** ~20 hours saved per AI-assisted developer per year
+
+**The friction:** Every time you open Claude Code, Gemini CLI, or Codex, your AI wakes up with amnesia. You re-explain your project structure, preferences, and recent work. Context is lost between sessions, and you waste time re-establishing shared understanding.
+
+**Why existing tools don't solve it:** AI tools read files on demand but don't persist learned context, preferences, or project-specific patterns across sessions. There's no standard way to give your AI "memory."
+
+**The solution:** Persistent AI context that learns your project, preferences, and recent work. Your AI remembers—always.
+
+```bash
+ink                     # Generate project context
+ink steve-jobs          # Use a persona
+ink me + steve-jobs     # Compose contexts
+ink learn               # Reflect and grow from session
+```
+
+**Status:** 🔴 Open
+
+---
+
+### 5. cif-validate
 > **Impact:** ~12 hours saved per materials scientist per year
 
 **The friction:** CIF files from databases or collaborators often contain partial occupancies, inconsistent symmetry, or missing metadata. DFT or structure analysis tools fail late, or worse, run with a subtly wrong structure.
@@ -94,7 +134,7 @@ cif-validate input.cif --fix-suggestions
 
 ---
 
-### 4. potential-lock
+### 6. potential-lock
 > **Impact:** ~10 hours saved per computational materials researcher per year
 
 **The friction:** Results change because an interatomic potential or force field file was updated, renamed, or swapped without anyone noticing. Reproducing a run becomes guesswork.
@@ -112,10 +152,6 @@ potential-lock diff old.lock new.lock
 **Status:** 🔴 Open
 
 ---
-
-
-
-
 
 ### 7. sdf-audit
 > **Impact:** ~9 hours saved per chemoinformatics researcher per year
@@ -174,9 +210,7 @@ data-manifest diff old.manifest.json new.manifest.json
 
 ---
 
-
-
-### 11. run-watchdog
+### 9. run-watchdog
 > **Impact:** ~20 hours saved per ML engineer per year
 
 **The friction:** Long training runs stall, diverge, or hang, but keep burning GPU hours. You often discover the failure the next morning.
@@ -195,8 +229,7 @@ run-watchdog --slurm <job_id> --auto-cancel
 
 ---
 
-
-### 13. eval-lock
+### 10. eval-lock
 > **Impact:** ~18 hours saved per researcher per year
 
 **The friction:** Evaluation numbers drift because datasets, metrics, or preprocessing change quietly. Teams argue about which score is "real."
@@ -215,7 +248,7 @@ eval-lock verify --pack imagenet_v3 --checksum
 
 ---
 
-### 14. prompt-budget
+### 11. prompt-budget
 > **Impact:** ~25 hours saved per LLM app developer per year
 
 **The friction:** LLM costs spiral because prompts grow, chains expand, and caching is inconsistent. You only notice after the bill arrives.
@@ -234,9 +267,7 @@ prompt-budget guard --max-usd 50/day
 
 ---
 
-
-
-### 16. figlint
+### 12. figlint
 > **Impact:** ~8 hours saved per researcher per paper
 
 **The friction:** Figures are rejected for wrong size, font, DPI, or accessibility issues right before submission deadlines.
@@ -254,8 +285,6 @@ figlint --fix --journal pnas figure.py
 **Status:** 🔴 Open
 
 ---
-
-
 
 ---
 ## Resolved
