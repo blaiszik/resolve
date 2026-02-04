@@ -11,7 +11,7 @@
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License"></a>
   <img src="https://img.shields.io/badge/issues-15_open-red.svg" alt="15 Open Issues">
-  <img src="https://img.shields.io/badge/resolved-1-green.svg" alt="1 Resolved">
+  <img src="https://img.shields.io/badge/resolved-0-green.svg" alt="0 Resolved">
 </p>
 
 ---
@@ -384,38 +384,12 @@ figlint --fix --journal pnas figure.py
 
 </details>
 
-<details>
-<summary><strong>15. grove</strong> - Git worktrees for JS/TS projects (~15 hrs/year)</summary>
-
-> **Impact:** ~15 hours saved per JS/TS developer per year
-
-**The friction:** Modern development often requires working on multiple branches simultaneously—reviewing a PR while fixing a bug, comparing implementations side-by-side, or running parallel AI coding sessions. Git worktrees solve this, but for JavaScript/TypeScript projects they're painful. Each worktree needs its own `node_modules`, meaning slow `npm install` in every worktree, gigabytes of duplicated packages, and manual port management for preview servers.
-
-**Why existing tools don't solve it:** Git worktrees work great for compiled languages, but the JS ecosystem assumes one `node_modules` per repo. No tool handles dependency deduplication, port allocation, and editor/AI tool configuration across worktrees.
-
-**The solution:** A git worktree manager with smart dependency handling—shared caches, automatic port allocation, and preserved tool configurations across worktrees.
-
-```bash
-grove create feature-branch
-grove list
-grove switch feature-branch
-grove clean --older-than 7d
-```
-
-**Status:** 🟢 Solved - see [Resolved](#resolved) section
-
-</details>
-
 ---
 
 ## Resolved
 
 *Issues that have working solutions.*
 
-### grove
-**The problem:** Git worktrees for JS/TS projects are painful; each needs its own `node_modules`.
-
-**Solved:** [grove](https://github.com/blaiszik/grove) by [@blaiszik](https://github.com/blaiszik)
 
 ---
 
