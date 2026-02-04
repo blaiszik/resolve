@@ -36,13 +36,13 @@ When you build a solution:
 
 We'll feature working solutions in the **Resolved** section with full credit.
 
-## The Resolve Standard
+## What Makes a Good Solution
 
-Tools that earn a place in Resolve should aim for:
-- **Zero Configuration** - Works instantly
-- **Beautiful Output** - CLIs are user interfaces
-- **Speed** - Faster than thought
-- **Privacy** - Data stays local unless explicitly needed
+Before linking your solution, check that it:
+- **Actually solves the friction** - Someone with the original problem can use it today
+- **Has a clear README** - Installation, basic usage, and at least one example
+- **Works without extensive setup** - Minimize dependencies and configuration
+- **Has a license** - MIT, Apache-2.0, BSD, etc.
 
 ## Status Legend
 

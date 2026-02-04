@@ -40,22 +40,31 @@ This repo does **not** host the tools themselves. It provides the shared backlog
 ## How It Works
 
 ```
- YOU                        RESOLVE                      COMMUNITY
-  |                            |                            |
-  |  1. Propose a friction     |                            |
-  |--------------------------->|                            |
-  |                            |  2. Validate & catalog     |
-  |                            |--------------------------->|
-  |                            |                            |
-  |                            |  3. Developer picks it up  |
-  |                            |<---------------------------|
-  |                            |                            |
-  |  4. Solution linked        |  4. Build in own repo      |
-  |<---------------------------|<---------------------------|
-  |                            |                            |
-  |  Problem solved!           |  Credit preserved!         |
-  |                            |                            |
+  RESEARCHER                   RESOLVE                     DEVELOPER
+      |                           |                            |
+      |  1. Propose               |                            |
+      |-------------------------->|                            |
+      |                           |                            |
+      |<------------------------->|  2. Discuss                |
+      |      (refine scope)       |<-------------------------->|
+      |                           |                            |
+      |                           |  3. Claim                  |
+      |                           |<---------------------------|
+      |                           |                            |
+      |                           |         4. Build           |
+      |                           |         (own repo)         |
+      |                           |                            |
+      |  5. Problem solved!       |  5. Link solution          |
+      |<--------------------------|<---------------------------|
+      |                           |                            |
+      |                           |     Credit preserved       |
 ```
+
+1. **Propose** — Researcher submits a friction point via issue template
+2. **Discuss** — Community refines scope, confirms no existing solution, validates impact
+3. **Claim** — Developer signals they're starting work on the issue
+4. **Build** — Developer creates solution in their own repository
+5. **Link** — Solution is linked back; researcher's problem is solved, developer gets credit
 
 ---
 
