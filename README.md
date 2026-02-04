@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="resolve.png" alt="Resolve Logo" width="80" height="80">
+  <img src="resolve.png" alt="Resolve Logo" width="360" height="360">
 </p>
 
 <h1 align="center">Resolve</h1>
