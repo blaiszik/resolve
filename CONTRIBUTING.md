@@ -29,12 +29,14 @@ Prefer the GitHub **"Propose a friction"** issue template. If you must draft man
 
 ## Building a Tool
 
-When you build a solution:
-1. Create your own repo
+Individuals or teams can tackle issues. When you build a solution:
+1. Create your own repo (or work within an existing project)
 2. Open a PR here updating the issue status to "🟡 In Progress" or "🟢 Solved"
 3. Link to your repo
 
-We'll feature working solutions in the **Resolved** section with full credit.
+**Finding collaborators:** Comment on any open issue to find teammates, or bring an issue back to your own project/community to build together.
+
+We'll feature working solutions in the **Resolved** section with full credit to all contributors.
 
 ## What Makes a Good Solution
 
@@ -49,5 +51,5 @@ Before linking your solution, check that it:
 | Status | Meaning |
 |--------|---------|
 | 🔴 Open | No known solution |
-| 🟡 In Progress | Someone is working on it |
+| 🟡 In Progress | Someone (or a team) is working on it |
 | 🟢 Solved | Working solution exists |

@@ -40,7 +40,7 @@ This repo does **not** host the tools themselves. It provides the shared backlog
 ## How It Works
 
 ```
-  RESEARCHER                   RESOLVE                     DEVELOPER
+  RESEARCHER                   RESOLVE                   BUILDER(S)
       |                           |                            |
       |  1. Propose               |                            |
       |-------------------------->|                            |
@@ -61,10 +61,10 @@ This repo does **not** host the tools themselves. It provides the shared backlog
 ```
 
 1. **Propose** — Researcher submits a friction point via issue template
-2. **Discuss** — Community refines scope, confirms no existing solution, validates impact
-3. **Claim** — Developer signals they're starting work on the issue
-4. **Build** — Developer creates solution in their own repository
-5. **Link** — Solution is linked back; researcher's problem is solved, developer gets credit
+2. **Discuss** — Community refines scope, confirms no existing solution, validates impact. Teams can form here or within existing projects.
+3. **Claim** — An individual or team signals they're starting work
+4. **Build** — Solution is created in its own repository
+5. **Link** — Solution is linked back; researcher's problem is solved, builders get credit
 
 ---
 
@@ -426,7 +426,9 @@ grove clean --older-than 7d
 2. [Claim it](../../issues/new?template=start-building.yml) so others know you're working on it
 3. Build a working solution (in your own repo)
 4. Open a PR linking to your repo
-5. Your tool gets featured here with full credit
+5. You and your team get featured here with full credit
+
+Teams can form directly on Resolve (comment on an issue to find collaborators) or within existing projects that want to tackle a friction point.
 
 ### Propose a New Issue
 Use the **["Propose a friction"](../../issues/new?template=propose-friction.yml)** issue template. We'll ask for:

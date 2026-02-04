@@ -1,5 +1,5 @@
 name: "Start building"
-description: "Claim an issue and start working on a solution"
+description: "Claim an issue and start working on a solution (solo or as a team)"
 title: "Building: <issue name>"
 labels: ["in-progress", "builder"]
 body:
@@ -7,6 +7,8 @@ body:
     attributes:
       value: |
         Great that you're picking up an issue! This helps coordinate work and lets others know a solution is in progress.
+
+        **Looking for teammates?** Comment on the original issue to find collaborators, or bring the issue back to your own project/community.
 
   - type: input
     id: issue
@@ -57,17 +59,8 @@ body:
   - type: markdown
     attributes:
       value: |
-        ## The Resolve Standard
-
-        Aim for these qualities in your solution:
-
-        - **Zero Configuration** - Works instantly, minimal setup
-        - **Beautiful Output** - CLIs are user interfaces too
-        - **Speed** - Faster than thought
-        - **Privacy** - Data stays local unless explicitly needed
-
         ## When you're done
 
         1. Open a PR updating the issue status to 🟢 Solved
         2. Add your repo to the Resolved section
-        3. Get credit for your work!
+        3. You and your team get credit for your work!
