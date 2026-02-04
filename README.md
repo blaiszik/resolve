@@ -89,21 +89,15 @@ A solution is considered "Resolved" when it meets the following:
 ## Open Issues (15)
 
 <details>
-<summary><strong>1. rootstock</strong> - MLIP environment management for HPC (~20 hrs/year)</summary>
+<summary><strong>1. HPC continuous integration runners</strong> - Easy and standardized Github actions CI/CD templates for testing software that targets major research clusters</summary>
 
-> **Impact:** ~20 hours saved per HPC researcher per year
+> **Impact:** Faster regression detection, less futzing with infra.
 
-**The friction:** Using Machine Learning Interatomic Potentials (MLIPs) on HPC clusters requires managing complex, conflicting Python environments with CUDA dependencies. Researchers waste hours wrestling with installations, and switching between MACE, CHGNet, or other calculators means rebuilding environments from scratch.
+**The friction:** GitHub Actions is really nice for automated testing. If you are developing software for scientific researchers on large clusters, it is difficult to replicate the exact setup of a cluster you're targeting. It is hard to know if a given package really works on a given cluster.
 
-**Why existing tools don't solve it:** Conda/pip environments don't cache well across users or handle GPU library conflicts. Containers add friction for interactive ASE workflows. There's no standard way to share pre-built MLIP environments across a cluster.
+**Why existing tools don't solve it:** I'm not sure how people solve (or don't solve) this problem now. I think "market research" is part of tackling this.
 
-**The solution:** Cached, isolated Python environments for MLIPs that communicate via the i-PI protocol over Unix sockets. Researchers use MLIP calculators through the ASE interface without managing dependencies.
-
-```bash
-rootstock run mace-mp-0 -- python relax.py
-rootstock test chgnet --verify-gpu
-rootstock register ./my-env.yaml --root /shared/envs
-```
+**The solution:** I'm also not sure. Is there a general solution across clusters? Is there a secure way to handle a long-lived auth token in a GH runner that HPC admins will approve of?
 
 **Status:** 🔴 Open
 
