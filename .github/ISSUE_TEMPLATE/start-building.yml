@@ -1,0 +1,73 @@
+name: "Start building"
+description: "Claim an issue and start working on a solution"
+title: "Building: <issue name>"
+labels: ["in-progress", "builder"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Great that you're picking up an issue! This helps coordinate work and lets others know a solution is in progress.
+
+  - type: input
+    id: issue
+    attributes:
+      label: Which Resolve issue are you tackling?
+      placeholder: "#3 or grove"
+    validations:
+      required: true
+
+  - type: input
+    id: repo
+    attributes:
+      label: Where will you build it?
+      description: "Link to your repo (can be empty/new)"
+      placeholder: "https://github.com/username/project"
+    validations:
+      required: true
+
+  - type: textarea
+    id: approach
+    attributes:
+      label: Your planned approach
+      description: "Brief summary of how you'll tackle this"
+      placeholder: "I plan to use X library and focus on Y use case first..."
+    validations:
+      required: false
+
+  - type: input
+    id: timeline
+    attributes:
+      label: Estimated timeline
+      placeholder: "Weekend project, 1-2 weeks, etc."
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Getting started checklist
+      description: "Reference checklist for building a Resolve solution"
+      options:
+        - label: "I've read the issue description and understand the friction"
+        - label: "I've checked that no one else is actively building this"
+        - label: "My repo will have a clear license (MIT, Apache-2.0, etc.)"
+        - label: "I'll include a README with quickstart and examples"
+        - label: "I'll link back to Resolve when complete"
+
+  - type: markdown
+    attributes:
+      value: |
+        ## The Resolve Standard
+
+        Aim for these qualities in your solution:
+
+        - **Zero Configuration** - Works instantly, minimal setup
+        - **Beautiful Output** - CLIs are user interfaces too
+        - **Speed** - Faster than thought
+        - **Privacy** - Data stays local unless explicitly needed
+
+        ## When you're done
+
+        1. Open a PR updating the issue status to 🟢 Solved
+        2. Add your repo to the Resolved section
+        3. Get credit for your work!

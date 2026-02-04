@@ -1,12 +1,61 @@
-# Resolve
+<p align="center">
+  <img src="resolve.png" alt="Resolve Logo" width="80" height="80">
+</p>
 
-> **The open registry for fixing the repeatable failures in AI, science, engineering, and other research workflows.**
+<h1 align="center">Resolve</h1>
+
+<p align="center">
+  <strong>The open registry for fixing the repeatable failures in AI, science, engineering, and other research workflows.</strong>
+</p>
+
+<p align="center">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License"></a>
+  <img src="https://img.shields.io/badge/issues-15_open-red.svg" alt="15 Open Issues">
+  <img src="https://img.shields.io/badge/resolved-1-green.svg" alt="1 Resolved">
+</p>
+
+---
 
 Researchers and engineers lose weeks each year to problems that should take minutes: broken environments, invisible dataset drift, stalled training runs, and last-minute figure rejections. These are often not hard problems. They are *unowned* problems, and we aim to resolve them.
 
 **Resolve catalogs high-leverage, well-scoped issues across AI and scientific research workflows, estimates the time they waste, and tracks solutions when they appear.** Each issue is proposed in a way to be 1) actionable to the open source community, 2) buildable in a few days, and 3) remove a recurring source of friction.
 
 This repo does **not** host the tools themselves. It provides the shared backlog the ecosystem needs, and seeks to build the community to solve them.
+
+---
+
+## Quick Start
+
+**For Researchers** - Have a recurring friction that wastes your time?
+1. [Search existing issues](#open-issues-15) to see if it's already cataloged
+2. If not, [propose a new friction](../../issues/new?template=propose-friction.yml)
+
+**For Developers** - Want to make an impact on research?
+1. Browse the [open issues](#open-issues-15) below
+2. [Claim one](../../issues/new?template=start-building.yml) and start building
+3. Get credited when your solution ships
+
+---
+
+## How It Works
+
+```
+ YOU                        RESOLVE                      COMMUNITY
+  |                            |                            |
+  |  1. Propose a friction     |                            |
+  |--------------------------->|                            |
+  |                            |  2. Validate & catalog     |
+  |                            |--------------------------->|
+  |                            |                            |
+  |                            |  3. Developer picks it up  |
+  |                            |<---------------------------|
+  |                            |                            |
+  |  4. Solution linked        |  4. Build in own repo      |
+  |<---------------------------|<---------------------------|
+  |                            |                            |
+  |  Problem solved!           |  Credit preserved!         |
+  |                            |                            |
+```
 
 ---
 
@@ -17,13 +66,6 @@ This repo does **not** host the tools themselves. It provides the shared backlog
 - **Credit preserved** -- solutions are linked and celebrated, not absorbed
 
 ---
-
-## How It Works
-
-1. **Propose a friction point** using the issue template
-2. **Validate** the pain and scope with maintainers and the community
-3. **Build a tool** (in your own repo) or point to an existing one if you know of a solution
-4. **Link the solution** here and move the issue to **Resolved**
 
 ## Resolution Criteria
 
@@ -37,7 +79,9 @@ A solution is considered "Resolved" when it meets the following:
 
 ## Open Issues (15)
 
-### 1. rootstock
+<details>
+<summary><strong>1. rootstock</strong> - MLIP environment management for HPC (~20 hrs/year)</summary>
+
 > **Impact:** ~20 hours saved per HPC researcher per year
 
 **The friction:** Using Machine Learning Interatomic Potentials (MLIPs) on HPC clusters requires managing complex, conflicting Python environments with CUDA dependencies. Researchers waste hours wrestling with installations, and switching between MACE, CHGNet, or other calculators means rebuilding environments from scratch.
@@ -54,9 +98,11 @@ rootstock register ./my-env.yaml --root /shared/envs
 
 **Status:** 🔴 Open
 
----
+</details>
 
-### 2. groundhog
+<details>
+<summary><strong>2. groundhog</strong> - Iterative HPC development with Globus Compute (~25 hrs/year)</summary>
+
 > **Impact:** ~25 hours saved per HPC researcher per year
 
 **The friction:** Iterative development on HPC clusters is slow and frustrating. Your local environment differs from remote, so you manually maintain multiple Python virtual environments. Queue times are long, so you delay testing—then fail immediately with `No module named 'numpy'` because environments drifted.
@@ -73,29 +119,11 @@ groundhog status --job-id abc123
 
 **Status:** 🔴 Open
 
----
+</details>
 
-### 3. grove
-> **Impact:** ~15 hours saved per JS/TS developer per year
+<details>
+<summary><strong>3. ink</strong> - Persistent AI context across sessions (~20 hrs/year)</summary>
 
-**The friction:** Modern development often requires working on multiple branches simultaneously—reviewing a PR while fixing a bug, comparing implementations side-by-side, or running parallel AI coding sessions. Git worktrees solve this, but for JavaScript/TypeScript projects they're painful. Each worktree needs its own `node_modules`, meaning slow `npm install` in every worktree, gigabytes of duplicated packages, and manual port management for preview servers.
-
-**Why existing tools don't solve it:** Git worktrees work great for compiled languages, but the JS ecosystem assumes one `node_modules` per repo. No tool handles dependency deduplication, port allocation, and editor/AI tool configuration across worktrees.
-
-**The solution:** A git worktree manager with smart dependency handling—shared caches, automatic port allocation, and preserved tool configurations across worktrees.
-
-```bash
-grove create feature-branch
-grove list
-grove switch feature-branch
-grove clean --older-than 7d
-```
-
-**Status:** 🔴 Open
-
----
-
-### 4. ink
 > **Impact:** ~20 hours saved per AI-assisted developer per year
 
 **The friction:** Every time you open Claude Code, Gemini CLI, or Codex, your AI wakes up with amnesia. You re-explain your project structure, preferences, and recent work. Context is lost between sessions, and you waste time re-establishing shared understanding.
@@ -113,9 +141,11 @@ ink learn               # Reflect and grow from session
 
 **Status:** 🔴 Open
 
----
+</details>
 
-### 5. paperpack
+<details>
+<summary><strong>4. paperpack</strong> - Modern academic reference management (~15 hrs/year)</summary>
+
 > **Impact:** ~15 hours saved per academic researcher per year
 
 **The friction:** Managing academic references is painful. You copy BibTeX from Google Scholar, manually fix formatting inconsistencies, deal with merge conflicts in version control, and spend hours ensuring collaborators have the same references. When you move to a new project, you start from scratch.
@@ -133,9 +163,11 @@ paperpack build
 
 **Status:** 🔴 Open
 
----
+</details>
 
-### 6. doi-fetch
+<details>
+<summary><strong>5. doi-fetch</strong> - CLI for paper metadata lookup (~8 hrs/year)</summary>
+
 > **Impact:** ~8 hours saved per researcher per year
 
 **The friction:** Looking up paper metadata requires navigating multiple websites, copy-pasting from different sources, and manually formatting citations. When writing scripts or AI prompts, there's no simple way to fetch structured metadata from a DOI.
@@ -152,9 +184,11 @@ doi-fetch 10.1038/nature14539 --format json
 
 **Status:** 🔴 Open
 
----
+</details>
 
-### 7. cif-validate
+<details>
+<summary><strong>6. cif-validate</strong> - CIF file validator for materials science (~12 hrs/year)</summary>
+
 > **Impact:** ~12 hours saved per materials scientist per year
 
 **The friction:** CIF files from databases or collaborators often contain partial occupancies, inconsistent symmetry, or missing metadata. DFT or structure analysis tools fail late, or worse, run with a subtly wrong structure.
@@ -171,9 +205,11 @@ cif-validate input.cif --fix-suggestions
 
 **Status:** 🔴 Open
 
----
+</details>
 
-### 8. potential-lock
+<details>
+<summary><strong>7. potential-lock</strong> - Interatomic potential versioning (~10 hrs/year)</summary>
+
 > **Impact:** ~10 hours saved per computational materials researcher per year
 
 **The friction:** Results change because an interatomic potential or force field file was updated, renamed, or swapped without anyone noticing. Reproducing a run becomes guesswork.
@@ -190,9 +226,11 @@ potential-lock diff old.lock new.lock
 
 **Status:** 🔴 Open
 
----
+</details>
 
-### 9. sdf-audit
+<details>
+<summary><strong>8. sdf-audit</strong> - Molecular file validation (~9 hrs/year)</summary>
+
 > **Impact:** ~9 hours saved per chemoinformatics researcher per year
 
 **The friction:** Molecular files contain invalid valence, missing stereochemistry, salts, or duplicate structures. These errors contaminate datasets and cause downstream failures.
@@ -209,9 +247,11 @@ sdf-audit molecules.smi --reject invalid.smi
 
 **Status:** 🔴 Open
 
----
+</details>
 
-### 10. env-replay
+<details>
+<summary><strong>9. env-replay</strong> - Full environment snapshot and rebuild (~12 hrs/year)</summary>
+
 > **Impact:** ~12 hours saved per researcher per year
 
 **The friction:** Reproducing a result from six months ago fails because `pip freeze` wasn't enough. OS packages, CUDA drivers, system libs, and hidden env vars are missing. You spend days doing version archaeology.
@@ -228,9 +268,11 @@ env-replay verify run.manifest.json           # sanity checks + diff
 
 **Status:** 🔴 Open
 
----
+</details>
 
-### 11. data-manifest
+<details>
+<summary><strong>10. data-manifest</strong> - Dataset versioning and drift detection (~15 hrs/year)</summary>
+
 > **Impact:** ~15 hours saved per data scientist per year
 
 **The friction:** Teams keep re-downloading datasets or silently using different versions. A single schema change can invalidate months of experiments, but no one notices until results diverge.
@@ -247,9 +289,11 @@ data-manifest diff old.manifest.json new.manifest.json
 
 **Status:** 🔴 Open
 
----
+</details>
 
-### 12. run-watchdog
+<details>
+<summary><strong>11. run-watchdog</strong> - Training run monitor and auto-termination (~20 hrs/year)</summary>
+
 > **Impact:** ~20 hours saved per ML engineer per year
 
 **The friction:** Long training runs stall, diverge, or hang, but keep burning GPU hours. You often discover the failure the next morning.
@@ -266,9 +310,11 @@ run-watchdog --slurm <job_id> --auto-cancel
 
 **Status:** 🔴 Open
 
----
+</details>
 
-### 13. eval-lock
+<details>
+<summary><strong>12. eval-lock</strong> - Versioned evaluation packs (~18 hrs/year)</summary>
+
 > **Impact:** ~18 hours saved per researcher per year
 
 **The friction:** Evaluation numbers drift because datasets, metrics, or preprocessing change quietly. Teams argue about which score is "real."
@@ -285,9 +331,11 @@ eval-lock verify --pack imagenet_v3 --checksum
 
 **Status:** 🔴 Open
 
----
+</details>
 
-### 14. prompt-budget
+<details>
+<summary><strong>13. prompt-budget</strong> - LLM cost profiling and budgeting (~25 hrs/year)</summary>
+
 > **Impact:** ~25 hours saved per LLM app developer per year
 
 **The friction:** LLM costs spiral because prompts grow, chains expand, and caching is inconsistent. You only notice after the bill arrives.
@@ -304,9 +352,11 @@ prompt-budget guard --max-usd 50/day
 
 **Status:** 🔴 Open
 
----
+</details>
 
-### 15. figlint
+<details>
+<summary><strong>14. figlint</strong> - Journal figure compliance checker (~8 hrs/paper)</summary>
+
 > **Impact:** ~8 hours saved per researcher per paper
 
 **The friction:** Figures are rejected for wrong size, font, DPI, or accessibility issues right before submission deadlines.
@@ -323,9 +373,32 @@ figlint --fix --journal pnas figure.py
 
 **Status:** 🔴 Open
 
----
+</details>
+
+<details>
+<summary><strong>15. grove</strong> - Git worktrees for JS/TS projects (~15 hrs/year)</summary>
+
+> **Impact:** ~15 hours saved per JS/TS developer per year
+
+**The friction:** Modern development often requires working on multiple branches simultaneously—reviewing a PR while fixing a bug, comparing implementations side-by-side, or running parallel AI coding sessions. Git worktrees solve this, but for JavaScript/TypeScript projects they're painful. Each worktree needs its own `node_modules`, meaning slow `npm install` in every worktree, gigabytes of duplicated packages, and manual port management for preview servers.
+
+**Why existing tools don't solve it:** Git worktrees work great for compiled languages, but the JS ecosystem assumes one `node_modules` per repo. No tool handles dependency deduplication, port allocation, and editor/AI tool configuration across worktrees.
+
+**The solution:** A git worktree manager with smart dependency handling—shared caches, automatic port allocation, and preserved tool configurations across worktrees.
+
+```bash
+grove create feature-branch
+grove list
+grove switch feature-branch
+grove clean --older-than 7d
+```
+
+**Status:** 🟢 Solved - see [Resolved](#resolved) section
+
+</details>
 
 ---
+
 ## Resolved
 
 *Issues that have working solutions.*
@@ -341,12 +414,13 @@ figlint --fix --journal pnas figure.py
 
 ### Build a Tool
 1. Pick an open issue
-2. Build a working solution (in your own repo)
-3. Open a PR linking to your repo
-4. Your tool gets featured here with full credit
+2. [Claim it](../../issues/new?template=start-building.yml) so others know you're working on it
+3. Build a working solution (in your own repo)
+4. Open a PR linking to your repo
+5. Your tool gets featured here with full credit
 
 ### Propose a New Issue
-Use the **"Propose a friction"** issue template. We'll ask for:
+Use the **["Propose a friction"](../../issues/new?template=propose-friction.yml)** issue template. We'll ask for:
 - The specific recurring friction
 - Who it affects
 - Evidence that no good solution exists
@@ -354,7 +428,7 @@ Use the **"Propose a friction"** issue template. We'll ask for:
 - Estimated time saved per year
 
 ### Link a Solution
-Use the **"Link a solution"** template to associate a tool or repo with an existing issue.
+Use the **["Link a solution"](../../issues/new?template=link-solution.yml)** template to associate a tool or repo with an existing issue.
 
 ### Spread the Word
 Star this repo. Share it with your lab or team. The more eyes, the faster problems get solved.
@@ -366,3 +440,9 @@ Star this repo. Share it with your lab or team. The more eyes, the faster proble
 Every hour lost to avoidable friction is an hour not spent on discovery. Resolve turns those hours into a public roadmap and makes it easier for builders to focus on the most valuable fixes.
 
 **Let's resolve the papercuts.**
+
+---
+
+<p align="center">
+  <a href="LICENSE">MIT License</a> · <a href="CONTRIBUTING.md">Contributing</a> · <a href="SECURITY.md">Security</a>
+</p>
