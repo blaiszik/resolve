@@ -1,27 +1,40 @@
 ## What does this PR do?
 
-<!-- Brief description of the change -->
+<!-- A sentence or two is plenty. -->
 
 ## Type of change
 
 - [ ] New friction proposal (adding to Open Issues)
 - [ ] Link a solution (updating status to In Progress or Resolved)
-- [ ] Documentation improvement
-- [ ] Template or infrastructure update
+- [ ] Documentation or template improvement
+- [ ] Something else (describe below)
 
 ## Related Issue
 
-<!-- Link to the Resolve issue if applicable -->
+<!-- Link to the Resolve issue this relates to -->
 Resolves #
 
-## For Solution Links
+---
 
-If you're linking a solution, please confirm:
+## If you're linking a solution
+
+Congrats on shipping! Please confirm:
 
 - [ ] The solution repo is public
-- [ ] It has a clear license
-- [ ] README includes quickstart and examples
-- [ ] It demonstrably solves the stated friction
+- [ ] It has an open source license
+- [ ] README includes installation, quickstart, and at least one example
+- [ ] It demonstrably solves the stated friction (not "in theory" -- today)
+- [ ] All contributors are credited in the PR description below
+
+### Contributors
+
+<!-- List everyone who helped build this. Everyone listed here gets credited in the Resolved section. -->
+
+| Name | Role |
+|------|------|
+| @handle | What they did |
+
+---
 
 ## Checklist
 

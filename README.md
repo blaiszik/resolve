@@ -147,21 +147,24 @@ ink learn               # Reflect and grow from session
 </details>
 
 <details>
-<summary><strong>4. paperpack</strong> - Modern academic reference management (~15 hrs/year)</summary>
+<summary><strong>4. paperpack</strong> - Modern academic reference management and metadata lookup (~20 hrs/year)</summary>
 
-> **Impact:** ~15 hours saved per academic researcher per year
+> **Impact:** ~20 hours saved per academic researcher per year
 
-**The friction:** Managing academic references is painful. You copy BibTeX from Google Scholar, manually fix formatting inconsistencies, deal with merge conflicts in version control, and spend hours ensuring collaborators have the same references. When you move to a new project, you start from scratch.
+**The friction:** Managing academic references is painful at every stage. Looking up paper metadata means navigating multiple websites and manually formatting citations. Building a `.bib` file means copy-pasting from Google Scholar, fixing inconsistencies, and dealing with merge conflicts in version control. When you move to a new project, you start from scratch.
 
-**Why existing tools don't solve it:** Google Scholar, ArXiv, and publisher sites all format the same paper differently. BibTeX files are hard to diff and merge. Traditional `.bib` files are locked to one project with no portability.
+**Why existing tools don't solve it:** Google Scholar, ArXiv, and publisher sites all format the same paper differently. APIs exist but require authentication and JSON parsing. BibTeX files are hard to diff and merge. Traditional `.bib` files are locked to one project with no portability. Zotero and Mendeley are GUI-heavy and not git-native.
 
-**The solution:** A modern reference manager with universal identifiers (DOI/ArXiv ID), automatic BibTeX generation, shareable "packs" of curated references, and lock files for reproducible builds across machines.
+**The solution:** A CLI-first reference manager with universal identifiers (DOI/ArXiv ID), instant metadata and BibTeX lookup, shareable "packs" of curated references, and lock files for reproducible builds across machines.
 
 ```bash
-paperpack add arxiv:1706.03762
-paperpack add doi:10.1038/nature14539
-paperpack add "attention is all you need"
-paperpack build
+paperpack add arxiv:1706.03762              # add by ArXiv ID
+paperpack add doi:10.1038/nature14539       # add by DOI
+paperpack add "attention is all you need"   # fuzzy search
+paperpack fetch 10.1038/nature14539         # quick metadata lookup without adding
+paperpack fetch 10.1038/nature14539 --format bibtex
+paperpack build                             # generate .bib from lock file
+paperpack diff main..feature-branch         # diff references across branches
 ```
 
 **Status:** 🔴 Open
@@ -169,20 +172,22 @@ paperpack build
 </details>
 
 <details>
-<summary><strong>5. doi-fetch</strong> - CLI for paper metadata lookup (~8 hrs/year)</summary>
+<summary><strong>5. struct-lint</strong> - Scientific structure file validator (~15 hrs/year)</summary>
 
-> **Impact:** ~8 hours saved per researcher per year
+> **Impact:** ~15 hours saved per computational scientist per year
 
-**The friction:** Looking up paper metadata requires navigating multiple websites, copy-pasting from different sources, and manually formatting citations. When writing scripts or AI prompts, there's no simple way to fetch structured metadata from a DOI.
+**The friction:** Computational scientists work with structure files (CIF for crystallography, SDF/SMILES for chemistry, PDB for biology) that are rife with silent errors. CIF files contain partial occupancies, inconsistent symmetry, or missing metadata -- DFT tools fail late or run with a subtly wrong structure. Molecular files contain invalid valence, missing stereochemistry, salts, or duplicates that contaminate entire datasets. In both cases, the errors are discovered far downstream, after wasting compute time or corrupting results.
 
-**Why existing tools don't solve it:** APIs exist but require authentication, parsing JSON responses, and handling rate limits. There's no simple CLI that just gives you what you need.
+**Why existing tools don't solve it:** Parsers coerce or drop invalid fields without clear reporting. Toolkits like RDKit can sanitize molecules but don't produce actionable audit trails or batch-level summaries. Validation rules are scattered across domain-specific libraries and enforced inconsistently. There's no unified tool that validates structure files across formats.
 
-**The solution:** A Python CLI and Claude Skill that fetches clean metadata from any DOI—title, authors, abstract, BibTeX, and more—in one command.
+**The solution:** A pluggable structure validator that supports multiple scientific file formats (CIF, SDF, SMILES, PDB), reports issues with clear explanations, and outputs clean audit reports and filtered datasets.
 
 ```bash
-doi-fetch 10.1038/nature14539
-doi-fetch 10.1038/nature14539 --format bibtex
-doi-fetch 10.1038/nature14539 --format json
+struct-lint input.cif                                  # validate a CIF file
+struct-lint molecules.sdf --out clean.sdf --report audit.json
+struct-lint input.cif --fix-suggestions
+struct-lint molecules.smi --reject invalid.smi
+struct-lint protein.pdb --report json
 ```
 
 **Status:** 🔴 Open
@@ -190,20 +195,28 @@ doi-fetch 10.1038/nature14539 --format json
 </details>
 
 <details>
-<summary><strong>6. cif-validate</strong> - CIF file validator for materials science (~12 hrs/year)</summary>
+<summary><strong>6. env-rescue</strong> - Environment snapshot, diagnosis, and rebuild (~20 hrs/year)</summary>
 
-> **Impact:** ~12 hours saved per materials scientist per year
+> **Impact:** ~20 hours saved per researcher per year
 
-**The friction:** CIF files from databases or collaborators often contain partial occupancies, inconsistent symmetry, or missing metadata. DFT or structure analysis tools fail late, or worse, run with a subtly wrong structure.
+**The friction:** Research environments break in two directions. *Forward:* you clone a repo and `pip install -r requirements.txt` fails -- CUDA version mismatch, yanked packages, missing system libraries (`libGL.so`), Python version conflicts. You spend hours reading cryptic errors and trying random version combinations. *Backward:* reproducing a result from six months ago fails because `pip freeze` wasn't enough -- OS packages, CUDA drivers, system libs, and env vars are missing. You spend days on version archaeology.
 
-**Why existing tools don't solve it:** Parsers usually coerce or drop invalid fields without a clear report. Validation rules are scattered across libraries and are not enforced consistently.
+**Why existing tools don't solve it:** Lockfiles capture Python, not GPU drivers, OS packages, or runtime flags. `pip` gives errors but not fixes. Dependency resolvers flag conflicts but not missing system libraries or CUDA mismatches. Containers help, but most research projects don't have one.
 
-**The solution:** A strict validator and explainer for CIFs that reports structural and metadata issues before conversion or simulation.
+**The solution:** A single tool that snapshots working environments, diagnoses broken ones, and rebuilds from manifests. Capture when things work, diagnose when they break.
 
 ```bash
-cif-validate input.cif
-cif-validate input.cif --report json
-cif-validate input.cif --fix-suggestions
+# Snapshot a working environment
+env-rescue capture --cmd "python train.py" --out run.manifest.json
+
+# Diagnose a broken one
+env-rescue diagnose requirements.txt
+env-rescue explain "ERROR: No matching distribution found for torch==1.9.0"
+env-rescue check --cuda --python 3.11
+
+# Rebuild from a snapshot
+env-rescue build run.manifest.json
+env-rescue verify run.manifest.json
 ```
 
 **Status:** 🔴 Open
@@ -211,83 +224,28 @@ cif-validate input.cif --fix-suggestions
 </details>
 
 <details>
-<summary><strong>7. potential-lock</strong> - Interatomic potential versioning (~10 hrs/year)</summary>
+<summary><strong>7. data-manifest</strong> - Research artifact versioning and drift detection (~20 hrs/year)</summary>
 
-> **Impact:** ~10 hours saved per computational materials researcher per year
+> **Impact:** ~20 hours saved per researcher per year
 
-**The friction:** Results change because an interatomic potential or force field file was updated, renamed, or swapped without anyone noticing. Reproducing a run becomes guesswork.
+**The friction:** Research depends on versioned artifacts -- datasets, interatomic potentials, force fields, pretrained weights -- but none of them have reliable version control. Teams silently use different dataset versions and don't notice until results diverge. A force field file gets updated or renamed without anyone noticing, making old results irreproducible. A schema change invalidates months of experiments. These are all the same underlying problem: critical research inputs changing without detection.
 
-**Why existing tools don't solve it:** There is no standard way to lock and verify potential files, citations, and parameter sets across codes.
+**Why existing tools don't solve it:** DVC and LakeFS exist but require remote storage backends and Git integration overhead -- too heavy for most research projects. Checksums exist but aren't standardized. There's no zero-infrastructure way to fingerprint, lock, and verify research artifacts with their provenance, citations, and parameter metadata.
 
-**The solution:** A manifest tool that fingerprints force field files, pins citations, and verifies a run uses the expected parameters.
-
-```bash
-potential-lock capture ./potentials --out potentials.lock
-potential-lock verify potentials.lock --paths ./potentials
-potential-lock diff old.lock new.lock
-```
-
-**Status:** 🔴 Open
-
-</details>
-
-<details>
-<summary><strong>8. sdf-audit</strong> - Molecular file validation (~9 hrs/year)</summary>
-
-> **Impact:** ~9 hours saved per chemoinformatics researcher per year
-
-**The friction:** Molecular files contain invalid valence, missing stereochemistry, salts, or duplicate structures. These errors contaminate datasets and cause downstream failures.
-
-**Why existing tools don't solve it:** Most toolkits can sanitize molecules, but they do not produce a clear, actionable audit trail or batch-level summaries.
-
-**The solution:** A structure audit CLI that validates SDF/SMILES, flags problems, and outputs a clean report and filtered dataset.
+**The solution:** A zero-infrastructure manifest tool that fingerprints any research artifact (datasets, potentials, weights, configs), records hashes, schema, provenance, and citations, and verifies future state against the locked manifest. Just a JSON sidecar file -- no server, no special Git hooks.
 
 ```bash
-sdf-audit molecules.sdf
-sdf-audit molecules.sdf --out clean.sdf --report audit.json
-sdf-audit molecules.smi --reject invalid.smi
-```
-
-**Status:** 🔴 Open
-
-</details>
-
-<details>
-<summary><strong>9. env-replay</strong> - Full environment snapshot and rebuild (~12 hrs/year)</summary>
-
-> **Impact:** ~12 hours saved per researcher per year
-
-**The friction:** Reproducing a result from six months ago fails because `pip freeze` wasn't enough. OS packages, CUDA drivers, system libs, and hidden env vars are missing. You spend days doing version archaeology.
-
-**Why existing tools don't solve it:** Lockfiles capture Python, not GPU drivers, OS packages, or runtime flags. Containers help, but most projects don't have one and researchers still need a fast local recreate.
-
-**The solution:** A one-command environment snapshot + rebuild tool that captures the *full* run context and recreates it later.
-
-```bash
-env-replay capture --cmd "python train.py" --out run.manifest.json
-env-replay build run.manifest.json            # reconstruct locally
-env-replay verify run.manifest.json           # sanity checks + diff
-```
-
-**Status:** 🔴 Open
-
-</details>
-
-<details>
-<summary><strong>10. data-manifest</strong> - Dataset versioning and drift detection (~15 hrs/year)</summary>
-
-> **Impact:** ~15 hours saved per data scientist per year
-
-**The friction:** Teams keep re-downloading datasets or silently using different versions. A single schema change can invalidate months of experiments, but no one notices until results diverge.
-
-**Why existing tools don't solve it:** Checksums exist but aren't standardized, and schema drift alerts are rare for research datasets.
-
-**The solution:** A dataset manifest generator that records hashes, schema, licenses, and provenance and can verify future pulls.
-
-```bash
+# Datasets
 data-manifest scan data/ --out manifest.json
 data-manifest verify data/ --manifest manifest.json
 data-manifest diff old.manifest.json new.manifest.json
+
+# Force fields and potentials
+data-manifest scan ./potentials --type potentials --out potentials.lock
+data-manifest verify potentials.lock --paths ./potentials
+
+# Any research artifact
+data-manifest scan ./checkpoints --out weights.manifest.json
 ```
 
 **Status:** 🔴 Open
@@ -295,7 +253,7 @@ data-manifest diff old.manifest.json new.manifest.json
 </details>
 
 <details>
-<summary><strong>11. run-watchdog</strong> - Training run monitor and auto-termination (~20 hrs/year)</summary>
+<summary><strong>8. run-watchdog</strong> - Training run monitor and auto-termination (~20 hrs/year)</summary>
 
 > **Impact:** ~20 hours saved per ML engineer per year
 
@@ -316,7 +274,7 @@ run-watchdog --slurm <job_id> --auto-cancel
 </details>
 
 <details>
-<summary><strong>12. eval-lock</strong> - Versioned evaluation packs (~18 hrs/year)</summary>
+<summary><strong>9. eval-lock</strong> - Versioned evaluation packs (~18 hrs/year)</summary>
 
 > **Impact:** ~18 hours saved per researcher per year
 
@@ -337,7 +295,7 @@ eval-lock verify --pack imagenet_v3 --checksum
 </details>
 
 <details>
-<summary><strong>13. prompt-budget</strong> - LLM cost profiling and budgeting (~25 hrs/year)</summary>
+<summary><strong>10. prompt-budget</strong> - LLM cost profiling and budgeting (~25 hrs/year)</summary>
 
 > **Impact:** ~25 hours saved per LLM app developer per year
 
@@ -358,7 +316,7 @@ prompt-budget guard --max-usd 50/day
 </details>
 
 <details>
-<summary><strong>14. figlint</strong> - Journal figure compliance checker (~8 hrs/paper)</summary>
+<summary><strong>11. figlint</strong> - Journal figure compliance checker (~8 hrs/paper)</summary>
 
 > **Impact:** ~8 hours saved per researcher per paper
 
@@ -378,6 +336,93 @@ figlint --fix --journal pnas figure.py
 
 </details>
 
+<details>
+<summary><strong>12. notebook-clean</strong> - Jupyter notebook hygiene for version control (~10 hrs/year)</summary>
+
+> **Impact:** ~10 hours saved per researcher per year
+
+**The friction:** Jupyter notebooks are the lingua franca of research, but they're hostile to version control. Outputs, execution counts, and cell metadata pollute diffs so badly that code review is effectively impossible. Researchers accidentally commit 50 MB inline images, API keys in output cells, or entire dataframes. Pull requests touching notebooks are either rubber-stamped or ignored.
+
+**Why existing tools don't solve it:** nbstripout exists but only strips outputs -- it doesn't catch embedded secrets, oversized outputs, or inconsistent cell ordering. nbdime helps with diffs but requires manual setup per repo and doesn't integrate cleanly with GitHub's review UI. There's no single tool that acts as a pre-commit linter combining output stripping, secret detection, and size guards for notebooks.
+
+**The solution:** A pre-commit hook and CLI that strips outputs, detects embedded secrets and large blobs, normalizes metadata, and optionally produces a clean `.py` mirror for review.
+
+```bash
+notebook-clean check *.ipynb                    # lint without modifying
+notebook-clean strip notebook.ipynb             # strip outputs + metadata
+notebook-clean install                          # set up pre-commit hook
+notebook-clean diff HEAD~1 analysis.ipynb       # human-readable diff
+```
+
+**Status:** 🔴 Open
+
+</details>
+
+<details>
+<summary><strong>13. slurm-translate</strong> - Cross-scheduler job script translator (~8 hrs/year)</summary>
+
+> **Impact:** ~8 hours saved per researcher per year
+
+**The friction:** Researchers regularly move between HPC clusters that run different schedulers -- SLURM at one university, PBS/Torque at a national lab, LSF at an industry partner. Every move means rewriting batch scripts: `#SBATCH` becomes `#PBS`, `srun` becomes `mpirun`, partition names change, environment module syntax differs. You spend an afternoon hunting through docs for the equivalent flags, then debug silent failures because one scheduler interprets walltime format differently.
+
+**Why existing tools don't solve it:** Each scheduler has its own documentation and its own quirks. There are scattered wiki pages with partial mapping tables, but no executable tool that does the translation. Researchers end up maintaining parallel copies of the same job script.
+
+**The solution:** A CLI that translates job scripts between SLURM, PBS/Torque, and LSF, mapping directives, resource requests, and common environment patterns.
+
+```bash
+slurm-translate job.slurm --to pbs --out job.pbs
+slurm-translate job.pbs --to slurm --out job.slurm
+slurm-translate job.slurm --to lsf --cluster bridges2
+```
+
+**Status:** 🔴 Open
+
+</details>
+
+<details>
+<summary><strong>14. table-extract</strong> - Extract data tables from research paper PDFs (~12 hrs/year)</summary>
+
+> **Impact:** ~12 hours saved per researcher per year
+
+**The friction:** Research papers report key results in tables buried inside PDFs. To compare methods, build meta-analyses, or reuse published data, you manually retype numbers from PDF tables into spreadsheets -- introducing transcription errors and wasting hours. Multi-page tables, merged cells, and footnote markers make it worse.
+
+**Why existing tools don't solve it:** Tabula and Camelot handle simple tables but choke on complex layouts (multi-row headers, spanning cells, mixed units). Copy-paste from PDFs garbles column alignment. There's no tool that handles the common research table formats and outputs clean, labeled data with source provenance.
+
+**The solution:** A CLI that extracts tables from research paper PDFs into CSV/JSON, handling common academic table layouts and preserving column headers and units.
+
+```bash
+table-extract paper.pdf                          # list all detected tables
+table-extract paper.pdf --table 3 --out results.csv
+table-extract paper.pdf --all --format json --out tables/
+table-extract paper.pdf --table 2 --verify       # show extracted vs original side-by-side
+```
+
+**Status:** 🔴 Open
+
+</details>
+
+<details>
+<summary><strong>15. gpu-claim</strong> - Lightweight shared GPU allocation for research labs (~15 hrs/year)</summary>
+
+> **Impact:** ~15 hours saved per researcher per year
+
+**The friction:** In shared lab workstations without a formal scheduler, GPU allocation is managed via Slack messages: "anyone using GPU 2?" You launch a job, discover someone else is already using that GPU (OOM crash), or you wait hours out of politeness for a GPU that's actually free. `nvidia-smi` shows processes but not who owns them or how long they'll run.
+
+**Why existing tools don't solve it:** Full schedulers (SLURM, Kubernetes) are overkill for a 4-8 GPU lab machine and require admin setup. `nvidia-smi` shows PIDs but not intent -- you can't tell if a GPU is "in use for 5 more minutes" or "running a 3-day training job."
+
+**The solution:** A zero-infrastructure CLI for claiming and releasing GPUs on shared machines, with visibility into who's using what and for how long. No daemon, no admin -- just a shared state file.
+
+```bash
+gpu-claim take 0,1 --user alice --hours 4        # claim GPUs 0 and 1
+gpu-claim status                                  # show all GPUs, owners, time remaining
+gpu-claim release 0,1                             # free GPUs
+gpu-claim wait --gpus 2 --notify                  # block until 2 GPUs are free
+```
+
+**Status:** 🔴 Open
+
+</details>
+
 ---
 
 ## Resolved
@@ -389,34 +434,41 @@ figlint --fix --journal pnas figure.py
 
 ## Contribute
 
+There are three ways to get involved. Pick the one that fits.
+
+### Report a Papercut
+Researchers: that thing that wastes your time every week? Write it up. Use the **["Propose a friction"](../../issues/new?template=propose-friction.yml)** template -- it'll walk you through scoping the problem so a builder can actually fix it.
+
 ### Build a Tool
-1. Pick an open issue
-2. [Claim it](../../issues/new?template=start-building.yml) so others know you're working on it
-3. Build a working solution (in your own repo)
-4. Open a PR linking to your repo
-5. You and your team get featured here with full credit
+Developers (and developer-researchers): this is where the fun is.
 
-Teams can form directly on Resolve (comment on an issue to find collaborators) or within existing projects that want to tackle a friction point.
+1. **Browse** the open issues above and find one that speaks to you
+2. **[Claim it](../../issues/new?template=start-building.yml)** so others know you're on it (and so potential teammates can find you)
+3. **Build** a working solution in your own repo -- you own the code, the license, and the credit
+4. **[Link it back](../../issues/new?template=link-solution.yml)** when it ships
+5. **Get featured** in the Resolved section with your full team credited
 
-### Propose a New Issue
-Use the **["Propose a friction"](../../issues/new?template=propose-friction.yml)** issue template. We'll ask for:
-- The specific recurring friction
-- Who it affects
-- Evidence that no good solution exists
-- A 1-5 day MVP scope
-- Estimated time saved per year
+**Why this is worth your time:** Every Resolve issue has a defined scope, a clear user, and a measurable impact. You're not building into the void -- researchers already told you they need this. It's a portfolio piece, a collaboration opportunity, and a chance to make someone's workflow meaningfully better, all in one.
 
-### Link a Solution
-Use the **["Link a solution"](../../issues/new?template=link-solution.yml)** template to associate a tool or repo with an existing issue.
+### Find Teammates
+Some of the best tools come from small teams. Here's how to find yours:
+
+- **Comment on any open issue** -- say what skills you bring and what you're looking for
+- **Share an issue with your lab or community** -- the descriptions are self-contained, anyone can read them and jump in
+- **Look for complementary skills** -- the magic combo is someone who *has the problem* paired with someone who *loves building CLIs*
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed team-building best practices, including how to divide work, what team sizes work best, and how to ship fast.
 
 ### Spread the Word
-Star this repo. Share it with your lab or team. The more eyes, the faster problems get solved.
+Star this repo. Share it with your lab, your Slack, your conference hallway track. The more eyes, the faster problems get solved.
 
 ---
 
 ## Why This Matters
 
-Every hour lost to avoidable friction is an hour not spent on discovery. Resolve turns those hours into a public roadmap and makes it easier for builders to focus on the most valuable fixes.
+Every hour lost to avoidable friction is an hour not spent on discovery. Resolve turns those hours into a public roadmap and makes it easy for builders to find high-impact problems worth solving.
+
+The tools get built. The builders get credit. The researchers get their time back.
 
 **Let's resolve the papercuts.**
 

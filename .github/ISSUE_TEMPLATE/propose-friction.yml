@@ -1,73 +1,100 @@
 name: "Propose a friction"
-description: "Add a new issue to Resolve's open registry"
+description: "Spotted a recurring papercut in your research workflow? Tell us about it."
 title: "Friction: <short name>"
 labels: ["friction", "proposal"]
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for contributing! Please keep the scope buildable in 1-5 days.
+        ## Nice catch.
+
+        You've found something that wastes researchers' time and shouldn't. Let's get it on the board.
+
+        A good friction proposal is **specific** (not "data is hard"), **buildable** (an MVP in 1-5 days), and makes the reader think *"Oh, I've had that exact problem."*
+
   - type: input
     id: name
     attributes:
-      label: Issue name (tool-like slug)
-      placeholder: "env-replay"
+      label: Tool name (short slug)
+      description: "A memorable, lowercase name for the tool that would fix this."
+      placeholder: "env-rescue, figlint, struct-lint"
     validations:
       required: true
+
   - type: input
     id: role
     attributes:
-      label: Primary role impacted
-      placeholder: "ML researcher, data scientist, computational chemist"
+      label: Who feels this pain?
+      description: "The primary role(s) impacted by this friction."
+      placeholder: "ML researcher, data scientist, computational chemist, grad student everywhere"
     validations:
       required: true
+
   - type: textarea
     id: friction
     attributes:
       label: The friction
-      description: "What repeatedly goes wrong? Be concrete and specific."
-      placeholder: "Reproducing a run fails because ..."
+      description: "What repeatedly goes wrong? Be specific and visceral -- make us wince."
+      placeholder: "Every time I try to reproduce a run from 6 months ago, I discover that pip freeze wasn't enough. CUDA drivers, system libs, and env vars are missing. I spend days on version archaeology."
     validations:
       required: true
+
   - type: textarea
     id: why-not-existing
     attributes:
       label: Why existing tools don't solve it
-      description: "Be explicit about gaps or missing workflows."
-      placeholder: "Tool X covers part of this, but ..."
+      description: "Name names. What have you tried, and where does it fall short?"
+      placeholder: "Tool X covers the Python side, but misses system dependencies. Tool Y requires a full container setup that nobody on the team maintains."
     validations:
       required: true
+
   - type: textarea
     id: solution
     attributes:
       label: What a solution would look like
-      description: "Describe the 1-5 day MVP, plus a CLI or API sketch if relevant."
-      placeholder: "A CLI that ..."
+      description: "Describe the 1-5 day MVP. CLI examples are great. Dream a little -- but keep it buildable."
+      placeholder: |
+        A CLI that captures the full environment on a successful run and can diagnose failures when reproducing:
+
+        ```bash
+        my-tool capture --cmd "python train.py" --out env.json
+        my-tool diagnose requirements.txt
+        ```
     validations:
       required: true
+
   - type: input
     id: impact
     attributes:
-      label: Impact per person per year (hours)
+      label: Time saved per person per year
+      description: "Your best honest estimate. It's okay to be rough -- we just want to know this isn't a one-off."
       placeholder: "~12 hours"
     validations:
       required: true
+
   - type: textarea
     id: evidence
     attributes:
-      label: Evidence or examples
-      description: "Links, anecdotes, or rough counts that show this is common."
-      placeholder: "Issue threads, papers, internal postmortems, etc."
+      label: Evidence or examples (optional)
+      description: "Anything that shows this is a common problem: links, issue threads, tweets, papers, anecdotes from your lab."
+      placeholder: "This came up in 3 different lab meetings this month. See also: [link to relevant discussion]"
     validations:
       required: false
+
   - type: checkboxes
     id: checks
     attributes:
-      label: Checklist
+      label: Before submitting
       options:
-        - label: I searched for existing solutions (GitHub, PyPI, web)
+        - label: I searched for existing solutions (GitHub, PyPI, web) and didn't find one that nails this
           required: true
-        - label: The scope is buildable in 1-5 days by a skilled developer
+        - label: A skilled developer (or small team) could build an MVP in 1-5 days
           required: true
-        - label: The friction is a recurring problem, not a one-off
+        - label: This is a recurring problem, not a one-off annoyance
           required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        *Thanks for taking the time to write this up. Every resolved friction started as a proposal just like yours.*
