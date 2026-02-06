@@ -10,8 +10,8 @@
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License"></a>
-  <img src="https://img.shields.io/badge/issues-15_open-red.svg" alt="15 Open Issues">
-  <img src="https://img.shields.io/badge/resolved-0-green.svg" alt="0 Resolved">
+  <img src="https://img.shields.io/badge/issues-14_open-red.svg" alt="14 Open Issues">
+  <img src="https://img.shields.io/badge/resolved-1-green.svg" alt="1 Resolved">
 </p>
 
 ---
@@ -27,11 +27,11 @@ This repo does **not** host the tools themselves. It provides the shared backlog
 ## Quick Start
 
 **For Researchers** - Have a recurring friction that wastes your time?
-1. [Search existing issues](#open-issues-15) to see if it's already cataloged
+1. [Search existing issues](#open-issues-14) to see if it's already cataloged
 2. If not, [propose a new friction](../../issues/new?template=propose-friction.yml)
 
 **For Developers** - Want to make an impact on research?
-1. Browse the [open issues](#open-issues-15) below
+1. Browse the [open issues](#open-issues-14) below
 2. [Claim one](../../issues/new?template=start-building.yml) and start building
 3. Get credited when your solution ships
 
@@ -86,46 +86,36 @@ A solution is considered "Resolved" when it meets the following:
 
 ---
 
-## Open Issues (15)
+## Open Issues (14)
 
 <details>
-<summary><strong>1. HPC continuous integration runners</strong> - Easy and standardized Github actions CI/CD templates for testing software that targets major research clusters</summary>
+<summary><strong>1. hpc-ci</strong> - Reusable GitHub Actions for testing on research clusters (~15 hrs/year)</summary>
 
-> **Impact:** Faster regression detection, less futzing with infra.
+> **Impact:** ~15 hours saved per HPC software developer per year
 
-**The friction:** GitHub Actions is really nice for automated testing. If you are developing software for scientific researchers on large clusters, it is difficult to replicate the exact setup of a cluster you're targeting. It is hard to know if a given package really works on a given cluster.
+**The friction:** You develop software that targets large research clusters (Delta, Polaris, Frontier, Perlmutter). Your CI runs on GitHub Actions, but your tests only pass on the actual cluster -- specific MPI versions, GPU architectures, module systems, and filesystems that can't be replicated in a container. You merge to main, push a release, and discover it's broken on the cluster your users actually run. Debugging takes hours because you can't reproduce the failure locally.
 
-**Why existing tools don't solve it:** I'm not sure how people solve (or don't solve) this problem now. I think "market research" is part of tackling this.
+**Why existing tools don't solve it:** Self-hosted GitHub runners exist but require cluster admin approval and a persistent auth token -- most HPC centers won't allow it. Container-based CI (Docker) can't replicate cluster-specific module systems, interconnects, or GPU configurations. There's no standardized way to run a test suite on a real HPC cluster as part of a GitHub Actions workflow.
 
-**The solution:** I'm also not sure. Is there a general solution across clusters? Is there a secure way to handle a long-lived auth token in a GH runner that HPC admins will approve of?
+**The solution:** A set of reusable GitHub Actions that SSH into target clusters, submit test jobs via the scheduler, and report results back to the PR. Supports SLURM and PBS, with configurable modules and allocations.
 
-**Status:** 🔴 Open
-
-</details>
-
-<details>
-<summary><strong>2. groundhog</strong> - Iterative HPC development with Globus Compute (~25 hrs/year)</summary>
-
-> **Impact:** ~25 hours saved per HPC researcher per year
-
-**The friction:** Iterative development on HPC clusters is slow and frustrating. Your local environment differs from remote, so you manually maintain multiple Python virtual environments. Queue times are long, so you delay testing—then fail immediately with `No module named 'numpy'` because environments drifted.
-
-**Why existing tools don't solve it:** The code-iteration loop and environment-iteration loop are independent, but both must be perfect for successful submission. You're constantly context-switching between code vs environment and local vs remote state.
-
-**The solution:** Simple decorators for running, tweaking, and re-running Python functions on HPC clusters via Globus Compute with automatic remote environment management (powered by uv). Update Python versions or dependencies in your script—no SSH needed.
-
-```bash
-groundhog run train.py::train_model --cluster delta
-groundhog sync --env requirements.txt
-groundhog status --job-id abc123
+```yaml
+# .github/workflows/hpc-test.yml
+- uses: hpc-ci/slurm-test@v1
+  with:
+    cluster: delta
+    modules: "gcc/11.3.0 cuda/11.8"
+    test-cmd: "pytest tests/ -x"
+    allocation: my-project
 ```
 
 **Status:** 🔴 Open
+[💬 Discuss](https://github.com/blaiszik/resolve/discussions) · [🛠️ Start building](../../issues/new?template=start-building.yml)
 
 </details>
 
 <details>
-<summary><strong>3. ink</strong> - Persistent AI context across sessions (~20 hrs/year)</summary>
+<summary><strong>2. ink</strong> - Persistent AI context across sessions (~20 hrs/year)</summary>
 
 > **Impact:** ~20 hours saved per AI-assisted developer per year
 
@@ -143,11 +133,12 @@ ink learn               # Reflect and grow from session
 ```
 
 **Status:** 🔴 Open
+[💬 Discuss](https://github.com/blaiszik/resolve/discussions) · [🛠️ Start building](../../issues/new?template=start-building.yml)
 
 </details>
 
 <details>
-<summary><strong>4. paperpack</strong> - Modern academic reference management and metadata lookup (~20 hrs/year)</summary>
+<summary><strong>3. paperpack</strong> - Modern academic reference management and metadata lookup (~20 hrs/year)</summary>
 
 > **Impact:** ~20 hours saved per academic researcher per year
 
@@ -168,11 +159,12 @@ paperpack diff main..feature-branch         # diff references across branches
 ```
 
 **Status:** 🔴 Open
+[💬 Discuss](https://github.com/blaiszik/resolve/discussions) · [🛠️ Start building](../../issues/new?template=start-building.yml)
 
 </details>
 
 <details>
-<summary><strong>5. struct-lint</strong> - Scientific structure file validator (~15 hrs/year)</summary>
+<summary><strong>4. struct-lint</strong> - Scientific structure file validator (~15 hrs/year)</summary>
 
 > **Impact:** ~15 hours saved per computational scientist per year
 
@@ -191,11 +183,12 @@ struct-lint protein.pdb --report json
 ```
 
 **Status:** 🔴 Open
+[💬 Discuss](https://github.com/blaiszik/resolve/discussions) · [🛠️ Start building](../../issues/new?template=start-building.yml)
 
 </details>
 
 <details>
-<summary><strong>6. env-rescue</strong> - Environment snapshot, diagnosis, and rebuild (~20 hrs/year)</summary>
+<summary><strong>5. env-rescue</strong> - Environment snapshot, diagnosis, and rebuild (~20 hrs/year)</summary>
 
 > **Impact:** ~20 hours saved per researcher per year
 
@@ -220,11 +213,12 @@ env-rescue verify run.manifest.json
 ```
 
 **Status:** 🔴 Open
+[💬 Discuss](https://github.com/blaiszik/resolve/discussions) · [🛠️ Start building](../../issues/new?template=start-building.yml)
 
 </details>
 
 <details>
-<summary><strong>7. data-manifest</strong> - Research artifact versioning and drift detection (~20 hrs/year)</summary>
+<summary><strong>6. data-manifest</strong> - Research artifact versioning and drift detection (~20 hrs/year)</summary>
 
 > **Impact:** ~20 hours saved per researcher per year
 
@@ -249,11 +243,12 @@ data-manifest scan ./checkpoints --out weights.manifest.json
 ```
 
 **Status:** 🔴 Open
+[💬 Discuss](https://github.com/blaiszik/resolve/discussions) · [🛠️ Start building](../../issues/new?template=start-building.yml)
 
 </details>
 
 <details>
-<summary><strong>8. run-watchdog</strong> - Training run monitor and auto-termination (~20 hrs/year)</summary>
+<summary><strong>7. run-watchdog</strong> - Training run monitor and auto-termination (~20 hrs/year)</summary>
 
 > **Impact:** ~20 hours saved per ML engineer per year
 
@@ -270,11 +265,12 @@ run-watchdog --slurm <job_id> --auto-cancel
 ```
 
 **Status:** 🔴 Open
+[💬 Discuss](https://github.com/blaiszik/resolve/discussions) · [🛠️ Start building](../../issues/new?template=start-building.yml)
 
 </details>
 
 <details>
-<summary><strong>9. eval-lock</strong> - Versioned evaluation packs (~18 hrs/year)</summary>
+<summary><strong>8. eval-lock</strong> - Versioned evaluation packs (~18 hrs/year)</summary>
 
 > **Impact:** ~18 hours saved per researcher per year
 
@@ -291,11 +287,12 @@ eval-lock verify --pack imagenet_v3 --checksum
 ```
 
 **Status:** 🔴 Open
+[💬 Discuss](https://github.com/blaiszik/resolve/discussions) · [🛠️ Start building](../../issues/new?template=start-building.yml)
 
 </details>
 
 <details>
-<summary><strong>10. prompt-budget</strong> - LLM cost profiling and budgeting (~25 hrs/year)</summary>
+<summary><strong>9. prompt-budget</strong> - LLM cost profiling and budgeting (~25 hrs/year)</summary>
 
 > **Impact:** ~25 hours saved per LLM app developer per year
 
@@ -312,11 +309,12 @@ prompt-budget guard --max-usd 50/day
 ```
 
 **Status:** 🔴 Open
+[💬 Discuss](https://github.com/blaiszik/resolve/discussions) · [🛠️ Start building](../../issues/new?template=start-building.yml)
 
 </details>
 
 <details>
-<summary><strong>11. figlint</strong> - Journal figure compliance checker (~8 hrs/paper)</summary>
+<summary><strong>10. figlint</strong> - Journal figure compliance checker (~8 hrs/paper)</summary>
 
 > **Impact:** ~8 hours saved per researcher per paper
 
@@ -333,11 +331,12 @@ figlint --fix --journal pnas figure.py
 ```
 
 **Status:** 🔴 Open
+[💬 Discuss](https://github.com/blaiszik/resolve/discussions) · [🛠️ Start building](../../issues/new?template=start-building.yml)
 
 </details>
 
 <details>
-<summary><strong>12. notebook-clean</strong> - Jupyter notebook hygiene for version control (~10 hrs/year)</summary>
+<summary><strong>11. notebook-clean</strong> - Jupyter notebook hygiene for version control (~10 hrs/year)</summary>
 
 > **Impact:** ~10 hours saved per researcher per year
 
@@ -355,11 +354,12 @@ notebook-clean diff HEAD~1 analysis.ipynb       # human-readable diff
 ```
 
 **Status:** 🔴 Open
+[💬 Discuss](https://github.com/blaiszik/resolve/discussions) · [🛠️ Start building](../../issues/new?template=start-building.yml)
 
 </details>
 
 <details>
-<summary><strong>13. slurm-translate</strong> - Cross-scheduler job script translator (~8 hrs/year)</summary>
+<summary><strong>12. slurm-translate</strong> - Cross-scheduler job script translator (~8 hrs/year)</summary>
 
 > **Impact:** ~8 hours saved per researcher per year
 
@@ -376,11 +376,12 @@ slurm-translate job.slurm --to lsf --cluster bridges2
 ```
 
 **Status:** 🔴 Open
+[💬 Discuss](https://github.com/blaiszik/resolve/discussions) · [🛠️ Start building](../../issues/new?template=start-building.yml)
 
 </details>
 
 <details>
-<summary><strong>14. table-extract</strong> - Extract data tables from research paper PDFs (~12 hrs/year)</summary>
+<summary><strong>13. table-extract</strong> - Extract data tables from research paper PDFs (~12 hrs/year)</summary>
 
 > **Impact:** ~12 hours saved per researcher per year
 
@@ -398,11 +399,12 @@ table-extract paper.pdf --table 2 --verify       # show extracted vs original si
 ```
 
 **Status:** 🔴 Open
+[💬 Discuss](https://github.com/blaiszik/resolve/discussions) · [🛠️ Start building](../../issues/new?template=start-building.yml)
 
 </details>
 
 <details>
-<summary><strong>15. gpu-claim</strong> - Lightweight shared GPU allocation for research labs (~15 hrs/year)</summary>
+<summary><strong>14. gpu-claim</strong> - Lightweight shared GPU allocation for research labs (~15 hrs/year)</summary>
 
 > **Impact:** ~15 hours saved per researcher per year
 
@@ -420,14 +422,38 @@ gpu-claim wait --gpus 2 --notify                  # block until 2 GPUs are free
 ```
 
 **Status:** 🔴 Open
+[💬 Discuss](https://github.com/blaiszik/resolve/discussions) · [🛠️ Start building](../../issues/new?template=start-building.yml)
 
 </details>
 
 ---
 
-## Resolved
+## Resolved (1)
 
-*Issues that have working solutions.*
+Solutions that shipped. The builders, the tools, the problems they fixed.
+
+| Issue | Solution | Built by | Links |
+|-------|----------|----------|-------|
+| **groundhog** - Iterative HPC development with Globus Compute | Simple decorators for running and re-running Python functions on HPC clusters via Globus Compute with automatic remote environment management (uv). No SSH needed. | [Garden-AI](https://github.com/Garden-AI) | [Repo](https://github.com/Garden-AI/groundhog) · [MIT](https://github.com/Garden-AI/groundhog/blob/main/LICENSE) |
+
+<details>
+<summary>See the original friction</summary>
+
+> **Impact:** ~25 hours saved per HPC researcher per year
+
+**The friction:** Iterative development on HPC clusters is slow and frustrating. Your local environment differs from remote, so you manually maintain multiple Python virtual environments. Queue times are long, so you delay testing—then fail immediately with `No module named 'numpy'` because environments drifted.
+
+**Why existing tools don't solve it:** The code-iteration loop and environment-iteration loop are independent, but both must be perfect for successful submission. You're constantly context-switching between code vs environment and local vs remote state.
+
+```bash
+groundhog run train.py::train_model --cluster delta
+groundhog sync --env requirements.txt
+groundhog status --job-id abc123
+```
+
+**Status:** 🟢 Solved
+
+</details>
 
 
 ---
