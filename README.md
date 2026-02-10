@@ -10,8 +10,8 @@
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License"></a>
-  <img src="https://img.shields.io/badge/issues-14_open-red.svg" alt="14 Open Issues">
-  <img src="https://img.shields.io/badge/resolved-1-green.svg" alt="1 Resolved">
+  <img src="https://img.shields.io/badge/issues-16_open-red.svg" alt="16 Open Issues">
+  <img src="https://img.shields.io/badge/resolved-0-green.svg" alt="0 Resolved">
 </p>
 
 ---
@@ -27,11 +27,11 @@ This repo does **not** host the tools themselves. It provides the shared backlog
 ## Quick Start
 
 **For Researchers** - Have a recurring friction that wastes your time?
-1. [Search existing issues](#open-issues-14) to see if it's already cataloged
+1. [Search existing issues](#open-issues-16) to see if it's already cataloged
 2. If not, [propose a new friction](../../issues/new?template=propose-friction.yml)
 
 **For Developers** - Want to make an impact on research?
-1. Browse the [open issues](#open-issues-14) below
+1. Browse the [open issues](#open-issues-16) below
 2. [Claim one](../../issues/new?template=start-building.yml) and start building
 3. Get credited when your solution ships
 
@@ -86,7 +86,7 @@ A solution is considered "Resolved" when it meets the following:
 
 ---
 
-## Open Issues (14)
+## Open Issues (16)
 
 <details>
 <summary><strong>1. hpc-ci</strong> - Reusable GitHub Actions for testing on research clusters (~15 hrs/year)</summary>
@@ -423,6 +423,26 @@ gpu-claim wait --gpus 2 --notify                  # block until 2 GPUs are free
 
 **Status:** 🔴 Open
 [💬 Discuss](https://github.com/blaiszik/resolve/discussions) · [🛠️ Start building](../../issues/new?template=start-building.yml)
+
+</details>
+
+<details>
+<summary><strong>15. gardener</strong> - Publish ML models on Garden with AI assistance (~12-48 hrs/year)</summary>
+
+> **Impact:** ~12-48 hours saved per researcher per year
+
+**The friction:** Publishing machine learning models on Garden requires constructing functions through Modal or Groundhog. Even experienced developers need 1-2 days for implementation, while learning curves extend this substantially for newcomers.
+
+**Why existing tools don't solve it:** LLMs are okay at writing Modal apps, but without extra context are not current on the latest APIs or best practices. Groundhog's novelty means large language models lack sufficient training data about it, making manual documentation injection tedious and inefficient.
+
+**The solution:** A Claude Code plugin with contextual knowledge of Garden, Modal, and Groundhog ecosystems. Researchers share research papers and code repositories, and the agent automatically scaffolds and tests deployment functions.
+
+```
+/gardener Here is my paper https://arxiv.org/abs/2401.12345 and my code
+https://github.com/user/model - help me publish these models on Garden
+```
+
+**Status:** 🟡 In Progress · [Related work](https://github.com/Garden-AI/gardener)
 
 </details>
 
