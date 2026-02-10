@@ -1,19 +1,23 @@
 name: "Link a solution"
-description: "Associate a tool or repo with an existing Resolve issue"
+description: "You built it. Now let's connect it to the problem it solves."
 title: "Solution: <issue name>"
 labels: ["solution", "triage"]
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for building! Provide a link and any proof that it works.
+        ## You did it.
+
+        Somewhere, a researcher is about to get hours of their life back because of what you built. Let's make sure they can find it.
+
   - type: input
     id: issue
     attributes:
-      label: Resolve issue number or name
-      placeholder: "#12 or env-replay"
+      label: Which Resolve issue does this solve?
+      placeholder: "#6 env-rescue"
     validations:
       required: true
+
   - type: input
     id: repo
     attributes:
@@ -21,42 +25,61 @@ body:
       placeholder: "https://github.com/org/tool"
     validations:
       required: true
+
   - type: dropdown
     id: status
     attributes:
       label: Status
       options:
-        - In Progress
-        - Solved
+        - "In Progress -- it's usable but still evolving"
+        - "Solved -- it works and it's ready for users"
     validations:
       required: true
+
   - type: textarea
     id: proof
     attributes:
-      label: Evidence it works
-      description: "Links to docs, demos, or release notes."
-      placeholder: "README section, screenshot, or demo video"
+      label: Show us it works
+      description: "A link to docs, a demo, a screenshot, a GIF -- whatever best demonstrates that the friction is resolved."
+      placeholder: |
+        - README with quickstart: https://github.com/org/tool#quickstart
+        - Demo GIF showing the full workflow
+        - Example output from a real use case
     validations:
-      required: false
+      required: true
+
   - type: input
     id: license
     attributes:
       label: License
       placeholder: "MIT, Apache-2.0, BSD-3-Clause"
     validations:
-      required: false
-  - type: input
-    id: contact
+      required: true
+
+  - type: textarea
+    id: team
     attributes:
-      label: Primary contact
-      placeholder: "@handle or email"
+      label: Who built this?
+      description: "List everyone who contributed. They'll all be credited in the Resolved section."
+      placeholder: |
+        @alice - core logic and domain expertise
+        @bob - CLI, packaging, and CI
+        @carol - documentation and testing
     validations:
-      required: false
+      required: true
+
   - type: textarea
     id: notes
     attributes:
-      label: Notes
-      description: "Anything maintainers should know about scope or limitations."
-      placeholder: "Known gaps, supported platforms, etc."
+      label: Anything else?
+      description: "Known limitations, supported platforms, future plans -- whatever helps users and maintainers."
+      placeholder: "Currently supports CIF and SDF formats. PDB support planned for v0.2."
     validations:
       required: false
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+
+        *Once this is reviewed, we'll update the registry and add your team to the Resolved section. Thanks for making research a little less frustrating.*

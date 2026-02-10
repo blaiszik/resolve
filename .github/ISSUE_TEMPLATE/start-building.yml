@@ -1,20 +1,27 @@
 name: "Start building"
-description: "Claim an issue and start working on a solution (solo or as a team)"
+description: "Claim an issue and start building a solution -- solo or with a team."
 title: "Building: <issue name>"
 labels: ["in-progress", "builder"]
 body:
   - type: markdown
     attributes:
       value: |
-        Great that you're picking up an issue! This helps coordinate work and lets others know a solution is in progress.
+        ## Let's go.
 
-        **Looking for teammates?** Comment on the original issue to find collaborators, or bring the issue back to your own project/community.
+        You're about to turn a research papercut into a working tool. That's worth celebrating before you've even written a line of code.
+
+        **Why this matters for you:**
+        - You'll ship a real tool with real users waiting for it
+        - You and your team get full credit in the Resolve registry
+        - It's a portfolio piece that shows you can identify a problem *and* solve it
+
+        **Looking for teammates?** Comment on the original issue -- say what skills you bring and what you're looking for. Some of the best Resolve tools have come from a researcher + developer pair who met in the comments.
 
   - type: input
     id: issue
     attributes:
       label: Which Resolve issue are you tackling?
-      placeholder: "#3 or grove"
+      placeholder: "#5 struct-lint"
     validations:
       required: true
 
@@ -22,17 +29,42 @@ body:
     id: repo
     attributes:
       label: Where will you build it?
-      description: "Link to your repo (can be empty/new)"
+      description: "Link to your repo. It's fine if it's empty or brand new."
       placeholder: "https://github.com/username/project"
     validations:
       required: true
+
+  - type: dropdown
+    id: team-size
+    attributes:
+      label: Team size
+      description: "Solo, pair, or crew?"
+      options:
+        - Solo
+        - Pair (2)
+        - Small team (3-4)
+        - Existing open source project
+    validations:
+      required: true
+
+  - type: textarea
+    id: team-members
+    attributes:
+      label: Team members (if applicable)
+      description: "Tag your teammates so they get credit from the start."
+      placeholder: "@alice (CLI + packaging), @bob (domain expert, materials science)"
+    validations:
+      required: false
 
   - type: textarea
     id: approach
     attributes:
       label: Your planned approach
-      description: "Brief summary of how you'll tackle this"
-      placeholder: "I plan to use X library and focus on Y use case first..."
+      description: "How are you thinking about tackling this? A few sentences is plenty. This helps potential collaborators (and future you) understand the plan."
+      placeholder: |
+        Plan to start with the CIF validation module since that's where I have domain expertise.
+        Will use Click for the CLI and target a pip-installable package.
+        MVP: validate a single file and produce a JSON report. Stretch: batch mode + fix suggestions.
     validations:
       required: false
 
@@ -40,27 +72,32 @@ body:
     id: timeline
     attributes:
       label: Estimated timeline
-      placeholder: "Weekend project, 1-2 weeks, etc."
+      description: "No pressure -- this just helps others know when to check in."
+      placeholder: "Weekend sprint, 1-2 weeks, building during a hackathon on March 15"
     validations:
       required: false
 
   - type: checkboxes
     id: checklist
     attributes:
-      label: Getting started checklist
-      description: "Reference checklist for building a Resolve solution"
+      label: Pre-flight checklist
+      description: "Quick sanity checks before you dive in."
       options:
         - label: "I've read the issue description and understand the friction"
-        - label: "I've checked that no one else is actively building this"
-        - label: "My repo will have a clear license (MIT, Apache-2.0, etc.)"
+        - label: "I've checked that no one else is actively building this (no open 'Building' issue)"
+        - label: "My repo will have an open source license (MIT, Apache-2.0, etc.)"
         - label: "I'll include a README with quickstart and examples"
-        - label: "I'll link back to Resolve when complete"
+        - label: "I'll link back to Resolve when it's ready"
 
   - type: markdown
     attributes:
       value: |
-        ## When you're done
+        ---
 
-        1. Open a PR updating the issue status to 🟢 Solved
-        2. Add your repo to the Resolved section
-        3. You and your team get credit for your work!
+        ## When you ship
+
+        1. Open a PR to update the issue status to 🟢 Solved
+        2. We'll add your tool and your team to the Resolved section
+        3. Tell the world -- you earned it
+
+        **Stuck or need help?** Comment on the original friction issue. The community is here to help unblock you, not judge you. Shipping something imperfect beats shipping nothing.
